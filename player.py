@@ -9,18 +9,18 @@ class Player(pygame.sprite.Sprite):
         self.game = game
         self.health = 100
         self.max_health = 100
-        self.attack = 13
+        self.attack = 7
         self.velocity = 3.5
-        self.image = pygame.image.load('assets/player.png')
+        self.image = pygame.image.load('assets/hero.png')
         #self.image = pygame.transform.scale(self.image, (100, 100))
         self.rect = self.image.get_rect()
         self.rect.x = 400
-        self.rect.y = 335
+        self.rect.y = 300
         self.all_projectiles = pygame.sprite.Group()
 
     def move_right(self):
         # si le joueur n'est pas en collision avec les monstres
-        if not self.game.check_collision(self, self.game.all_monsters):
+        if not self.game.check_collision(self, self.game.all_ANGEL) or self.game.check_collision(self, self.game.all_BOSS):
             self.rect.x += self.velocity
 
     def move_left(self):
@@ -29,6 +29,7 @@ class Player(pygame.sprite.Sprite):
     def launch_projectile(self):
         #creation d'une nouvelle instance de le class projectile
         self.all_projectiles.add(Projectile(self))
+        self.game.sound_manager.play('tir')
 
     def update_health_bar(self, surface):
         #dessiner la bar de vie
