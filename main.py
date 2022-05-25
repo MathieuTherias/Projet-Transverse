@@ -3,26 +3,32 @@ import math
 from game import Game
 pygame.init()
 
+#def d'une clock
+clock = pygame.time.Clock()
+FPS = 40
+
+
 pygame.display.set_caption("A.O.G")
 screen = pygame.display.set_mode((1080,720))
 
 #importation de l'arriere plan
 background = pygame.image.load('assets/Decore.jpg')
-background = pygame.transform.scale(background, (1080,720))
+background = pygame.transform.scale(background, (1080, 720))
 
 
 #charger la baniere
-banner = pygame.image.load('assets/banner.png')
-banner = pygame.transform.scale(banner, (500, 500))
+banner = pygame.image.load('assets/ASCENSION T.png')
+banner = pygame.transform.scale(banner, (700, 700))
 banner_rect = banner.get_rect()
-banner_rect.x = math.ceil(screen.get_width() / 4)
+banner_rect.x = math.ceil(screen.get_width() / 4.888)
+banner_rect.y = math.ceil(screen.get_height()/15)
 
 #importer ou charger un bouton pour lancer la partie
-play_button = pygame.image.load('assets/button.png')
-play_button = pygame.transform.scale(play_button, (400, 150))
+play_button = pygame.image.load('assets/JOUER T.png')
+play_button = pygame.transform.scale(play_button, (1000, 1100))
 play_button_rect = play_button.get_rect()
-play_button_rect.x = math.ceil(screen.get_width() / 3.33)
-play_button_rect.y = math.ceil(screen.get_height() / 2)
+play_button_rect.x = math.ceil(screen.get_width()/15)
+play_button_rect.y = math.ceil(screen.get_height() / 25)
 
 #charger le jeu
 game = Game()
@@ -51,7 +57,6 @@ while running :
         if event.type == pygame.QUIT :
             running = False
             pygame.quit()
-            print("Fermeture du jeu")
 
         elif event.type == pygame.KEYDOWN :
             game.pressed[event.key] = True
@@ -68,3 +73,6 @@ while running :
             if play_button_rect.collidepoint(event.pos):
                 #mettre le jeu en mode lancer
                 game.start()
+                #son
+                game.sound_manager.play('click')
+    clock.tick(FPS)
